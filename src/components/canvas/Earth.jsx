@@ -19,14 +19,23 @@ const Earth = () => {
     }
   });
 
-  const [dataSphere] = React.useState(() => random.inSphere(new Float32Array(2000), { radius: 1.3 }));
+  const [dataSphere] = React.useState(() => {
+    const positions = random.inSphere(new Float32Array(2000), { radius: 1.3 });
+    // Filter out any NaN values
+    for (let i = 0; i < positions.length; i++) {
+      if (Number.isNaN(positions[i])) {
+        positions[i] = 0;
+      }
+    }
+    return positions;
+  });
 
   return (
     <group ref={earthRef}>
       <Sphere args={[1, 64, 64]}>
         <meshStandardMaterial 
-          color="#1e3a8a" // Dark blue
-          emissive="#3b82f6" // Brighter blue emissive
+          color="#1e3a8a"
+          emissive="#3b82f6"
           emissiveIntensity={0.3}
           roughness={0.4}
           metalness={0.2}
@@ -38,7 +47,7 @@ const Earth = () => {
       <Points ref={dataPointsRef} positions={dataSphere} stride={3} frustumCulled>
         <PointMaterial
           transparent
-          color="#93c5fd" // Light blue for data points
+          color="#93c5fd"
           size={0.015}
           sizeAttenuation={true}
           depthWrite={false}

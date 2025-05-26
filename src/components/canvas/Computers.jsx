@@ -19,8 +19,16 @@ const AiBrain = ({ isMobile }) => {
     }
   });
   
-  const [sphereParticles] = useState(() => random.inSphere(new Float32Array(1000), { radius: isMobile ? 1.8 : 2.5 }));
-
+  const [sphereParticles] = useState(() => {
+    const positions = random.inSphere(new Float32Array(1000), { radius: isMobile ? 1.8 : 2.5 });
+    // Filter out any NaN values
+    for (let i = 0; i < positions.length; i++) {
+      if (Number.isNaN(positions[i])) {
+        positions[i] = 0;
+      }
+    }
+    return positions;
+  });
 
   return (
     <group ref={brainRef}>
