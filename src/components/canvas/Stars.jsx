@@ -6,14 +6,12 @@ import * as random from "maath/random/dist/maath-random.esm";
 const Stars = (props) => {
   const ref = useRef();
   const [sphere] = useState(() => {
-    const positions = random.inSphere(new Float32Array(5000), { radius: 1.2 });
-    // Filter out any NaN values
-    for (let i = 0; i < positions.length; i++) {
-      if (Number.isNaN(positions[i])) {
-        positions[i] = 0;
-      }
-    }
-    return positions;
+    let positions = random.inSphere(new Float32Array(5000), { radius: 1.2 });
+    // Create a new array with only valid numbers
+    const validPositions = new Float32Array(
+      Array.from(positions).filter(Number.isFinite)
+    );
+    return validPositions;
   });
 
   useFrame((state, delta) => {
