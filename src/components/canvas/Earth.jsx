@@ -20,10 +20,12 @@ const Earth = () => {
   });
 
   const [dataSphere] = React.useState(() => {
-    let positions = random.inSphere(new Float32Array(2000), { radius: 1.3 });
-    // Create a new array with only valid numbers
+    const positions = random.inSphere(new Float32Array(2000), { radius: 1.3 });
+    // Create a new array with only valid numbers, replacing NaN and infinite values with 0
     const validPositions = new Float32Array(
-      Array.from(positions).filter(Number.isFinite)
+      Array.from(positions).map(val => {
+        return isNaN(val) || !isFinite(val) ? 0 : val;
+      })
     );
     return validPositions;
   });

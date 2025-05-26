@@ -20,10 +20,12 @@ const AiBrain = ({ isMobile }) => {
   });
   
   const [sphereParticles] = useState(() => {
-    let positions = random.inSphere(new Float32Array(1000), { radius: isMobile ? 1.8 : 2.5 });
-    // Create a new array with only valid numbers
+    const positions = random.inSphere(new Float32Array(1000), { radius: isMobile ? 1.8 : 2.5 });
+    // Create a new array with only valid numbers, filtering out NaN and infinite values
     const validPositions = new Float32Array(
-      Array.from(positions).filter(Number.isFinite)
+      Array.from(positions).map(val => {
+        return isNaN(val) || !isFinite(val) ? 0 : val;
+      })
     );
     return validPositions;
   });
