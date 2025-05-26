@@ -210,4 +210,4 @@ export function SplashCursor({
       style={{ width: '100vw', height: '100vh' }}
     />
   );
-} 
+}
