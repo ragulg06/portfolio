@@ -78,12 +78,6 @@ const App = () => {
     <ErrorBoundary>
       <BrowserRouter>
         <div className="relative z-0 bg-background">
-          <SplashCursor 
-            BACK_COLOR={{ r: 0.3, g: 0.4, b: 0.6 }}
-            COLOR_UPDATE_SPEED={4}
-            SPLAT_RADIUS={1.0}
-            SPLAT_FORCE={10000}
-          />
           <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center">
             <Navbar />
             <Suspense fallback={<div className="h-screen w-full flex items-center justify-center">Loading...</div>}>
@@ -101,6 +95,13 @@ const App = () => {
               <StarsCanvas />
             </div>
           </Suspense>
+          <SplashCursor 
+            BACK_COLOR={{ r: 0.1, g: 0.1, b: 0.2 }}
+            COLOR_UPDATE_SPEED={5}
+            SPLAT_RADIUS={0.8}
+            SPLAT_FORCE={6000}
+            TRANSPARENT={true}
+          />
           <Toaster />
         </div>
       </BrowserRouter>

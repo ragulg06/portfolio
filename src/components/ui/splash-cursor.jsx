@@ -129,6 +129,11 @@ export function SplashCursor({
     const backColorLocation = gl.getUniformLocation(program, 'backColor');
     const colorUpdateSpeedLocation = gl.getUniformLocation(program, 'colorUpdateSpeed');
 
+    // Get attribute location
+    const positionLocation = gl.getAttribLocation(program, 'position');
+    gl.enableVertexAttribArray(positionLocation);
+    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
     // Animation loop
     function animate() {
       const canvas = canvasRef.current;
@@ -184,11 +189,9 @@ export function SplashCursor({
     window.addEventListener('resize', () => {
       const displayWidth = canvas.clientWidth;
       const displayHeight = canvas.clientHeight;
-      if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
-        canvas.width = displayWidth;
-        canvas.height = displayHeight;
-        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-      }
+      canvas.width = displayWidth;
+      canvas.height = displayHeight;
+      gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     });
 
     // Start animation
